@@ -30,10 +30,10 @@
         const IPC = require('electron').ipcRenderer;
         const REMOTE = require('electron').remote;
 
-        IPC.on('arguments-load', (event, args) => {
+//         IPC.on('arguments-load', (event, args) => {
 
-            const password = args['remoting-auth-token'];
-            const port = args['app-port'];
+//             const password = args['remoting-auth-token'];
+//             const port = args['app-port'];
 
             window.swaggerUi = new SwaggerUi({
               url: `./swagger.json`,
@@ -64,12 +64,12 @@
 
             window.swaggerUi.load();
 
-        });
+//         });
 
-        IPC.on('arguments-error', (event, arg) => {
-            alert(arg);
-            REMOTE.getCurrentWindow().close();
-        });
+//         IPC.on('arguments-error', (event, arg) => {
+//             alert(arg);
+//             REMOTE.getCurrentWindow().close();
+//         });
 
     </script>
 </head>
