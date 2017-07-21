@@ -26,43 +26,44 @@
 
 
     <script type="text/javascript">
-
-        const IPC = require('electron').ipcRenderer;
-        const REMOTE = require('electron').remote;
+// const IPC = require('electron').ipcRenderer;
+// const REMOTE = require('electron').remote;
 
 //         IPC.on('arguments-load', (event, args) => {
 
 //             const password = args['remoting-auth-token'];
 //             const port = args['app-port'];
+const password = 'placecholder';
+window.swaggerUi = new SwaggerUi({
+    url: `swagger.json`,
+    dom_id: 'swagger-ui-container',
+    supportedSubmitMethods: ['get', 'post', 'put', 'delete', 'patch'],
+    onComplete(swaggerApi, swaggerUi) {
+        $('pre code').each(function(i, e) {
+            hljs.highlightBlock(e);
+        });
 
-            window.swaggerUi = new SwaggerUi({
-              url: `./swagger.json`,
-              dom_id: "swagger-ui-container",
-              supportedSubmitMethods: ['get', 'post', 'put', 'delete', 'patch'],
-              onComplete(swaggerApi, swaggerUi) {
+        const header = `Basic ${btoa(`riot:${password}`)}`;
+        const auth = new SwaggerClient.ApiKeyAuthorization(
+            'Authorization',
+            header,
+            'header'
+        );
 
-                $('pre code').each(function(i, e) {
-                  hljs.highlightBlock(e)
-                });
+        window.swaggerUi.api.clientAuthorizations.add('riot', auth);
+    },
+    onFailure(data) {
+        alert('Unable to Load SwaggerUI');
+        REMOTE.getCurrentWindow().close();
+    },
+    docExpansion: 'none',
+    jsonEditor: false,
+    apisSorter: 'alpha',
+    defaultModelRendering: 'schema',
+    showRequestHeaders: true
+});
 
-
-                const header = `Basic ${btoa(`riot:${password}`)}`;
-                const auth = new SwaggerClient.ApiKeyAuthorization("Authorization", header, "header");
-
-                window.swaggerUi.api.clientAuthorizations.add("riot", auth);
-              },
-              onFailure(data) {
-                alert("Unable to Load SwaggerUI");
-                REMOTE.getCurrentWindow().close();
-              },
-              docExpansion: "none",
-              jsonEditor: false,
-              apisSorter: "alpha",
-              defaultModelRendering: 'schema',
-              showRequestHeaders: true
-            });
-
-            window.swaggerUi.load();
+window.swaggerUi.load();
 
 //         });
 
@@ -70,8 +71,7 @@
 //             alert(arg);
 //             REMOTE.getCurrentWindow().close();
 //         });
-
-    </script>
+</script>
 </head>
 
 <body class="swagger-section">
