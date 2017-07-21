@@ -36,7 +36,7 @@
             const port = args['app-port'];
 
             window.swaggerUi = new SwaggerUi({
-              url: `https://riot:${password}@localhost:${port}/v2/swagger.json`,
+              url: `./swagger.json`,
               dom_id: "swagger-ui-container",
               supportedSubmitMethods: ['get', 'post', 'put', 'delete', 'patch'],
               onComplete(swaggerApi, swaggerUi) {
